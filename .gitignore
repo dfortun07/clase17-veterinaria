@@ -1,0 +1,21 @@
+## Visual Studio / .NET Ignore
+[Bb]in/
+[Oo]bj/
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Database files
+*.db
+*.db-shm
+*.db-wal
+
+# Logs
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+

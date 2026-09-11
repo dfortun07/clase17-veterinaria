@@ -1,0 +1,33 @@
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+body {
+    background-color: #f8f9fa;
+    color: #212529;
+}
+
+.card {
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+}
+
+.card-header {
+    border-bottom: 1px solid #dee2e6;
+}
+
+.table th {
+    font-weight: 600;
+}
+
+.form-label {
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+ 

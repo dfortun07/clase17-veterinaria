@@ -1,0 +1,40 @@
+﻿@page
+@model clase17david.Pages.EstudiantesModel
+@{
+    ViewData["Title"] = "Registro de Estudiantes";
+}
+
+<div class="contenedor">
+    <div class="formulario">
+        <h2>Registro de Estudiante</h2>
+
+        <form method="post" asp-antiforgery="false">
+            <div class="campo">
+                <label>Nombres:</label>
+                <input asp-for="Nombres" />
+            </div>
+
+            <div class="campo">
+                <label>Apellidos:</label>
+                <input asp-for="Apellidos" />
+            </div>
+
+            <div class="campo">
+                <label>Carrera:</label>
+                <input asp-for="Carrera" />
+            </div>
+
+            <div class="acciones">
+                <button type="reset" class="btn-cancelar">Cancelar</button>
+                <button type="submit" class="btn-guardar">Guardar</button>
+            </div>
+        </form>
+
+        @if (!string.IsNullOrEmpty(Model.Mensaje))
+        {
+            <div class="resultado">
+                @Model.Mensaje
+            </div>
+        }
+    </div>
+</div>
