@@ -1,0 +1,113 @@
+@page
+@model clase17david.Pages.PropietariosModel
+@{
+    ViewData["Title"] = "Propietarios";
+}
+
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="card shadow-sm">
+            <div class="card-header bg-white">
+                <h5 class="card-title mb-0">Registro de Propietario</h5>
+            </div>
+            <div class="card-body">
+                @if (!string.IsNullOrEmpty(Model.Mensaje))
+                {
+                    <div class="alert alert-success py-2" role="alert">
+                        @Model.Mensaje
+                    </div>
+                }
+
+                <form method="post">
+                    <div class="mb-3">
+                        <label asp-for="Propietario.Nombre" class="form-label"></label>
+                        <input asp-for="Propietario.Nombre" class="form-control" placeholder="Ingrese nombre" />
+                        <span asp-validation-for="Propietario.Nombre" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Propietario.Apellidos" class="form-label"></label>
+                        <input asp-for="Propietario.Apellidos" class="form-control" placeholder="Ingrese apellidos" />
+                        <span asp-validation-for="Propietario.Apellidos" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Propietario.Telefono" class="form-label"></label>
+                        <input asp-for="Propietario.Telefono" class="form-control" placeholder="Numero de telefono" />
+                        <span asp-validation-for="Propietario.Telefono" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Propietario.Email" class="form-label"></label>
+                        <input asp-for="Propietario.Email" type="email" class="form-control" placeholder="correo@ejemplo.com" />
+                        <span asp-validation-for="Propietario.Email" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Propietario.Estado" class="form-label"></label>
+                        <select asp-for="Propietario.Estado" class="form-select">
+                            <option value="Activo">Activo</option>
+                            <option value="Inactivo">Inactivo</option>
+                        </select>
+                        <span asp-validation-for="Propietario.Estado" class="text-danger small"></span>
+                    </div>
+
+                    <div class="d-flex justify-content-end gap-2">
+                        <button type="reset" class="btn btn-secondary">Limpiar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-header bg-white">
+                <h5 class="card-title mb-0">Lista de Propietarios</h5>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>#</th>
+                                <th>Nombre Completo</th>
+                                <th>Telefono</th>
+                                <th>Email</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.ListaPropietarios.Count == 0)
+                            {
+                                <tr>
+                                    <td colspan="5" class="text-center text-muted py-3">
+                                        No hay propietarios registrados.
+                                    </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                @foreach (var p in Model.ListaPropietarios)
+                                {
+                                    <tr>
+                                        <td>@p.Id</td>
+                                        <td><strong>@p.NombreCompleto</strong></td>
+                                        <td>@(string.IsNullOrEmpty(p.Telefono) ? "-" : p.Telefono)</td>
+                                        <td>@(string.IsNullOrEmpty(p.Email) ? "-" : p.Email)</td>
+                                        <td>
+                                            <span class="badge @(p.Estado == "Activo" ? "bg-success" : "bg-danger")">
+                                                @p.Estado
+                                            </span>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
