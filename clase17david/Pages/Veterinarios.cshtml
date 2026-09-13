@@ -1,0 +1,113 @@
+@page
+@model clase17david.Pages.VeterinariosModel
+@{
+    ViewData["Title"] = "Veterinarios";
+}
+
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="card shadow-sm">
+            <div class="card-header bg-white">
+                <h5 class="card-title mb-0">Registro de Veterinario</h5>
+            </div>
+            <div class="card-body">
+                @if (!string.IsNullOrEmpty(Model.Mensaje))
+                {
+                    <div class="alert alert-success py-2" role="alert">
+                        @Model.Mensaje
+                    </div>
+                }
+
+                <form method="post">
+                    <div class="mb-3">
+                        <label asp-for="Veterinario.Nombre" class="form-label"></label>
+                        <input asp-for="Veterinario.Nombre" class="form-control" placeholder="Nombre" />
+                        <span asp-validation-for="Veterinario.Nombre" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Veterinario.Apellidos" class="form-label"></label>
+                        <input asp-for="Veterinario.Apellidos" class="form-control" placeholder="Apellidos" />
+                        <span asp-validation-for="Veterinario.Apellidos" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Veterinario.Especialidad" class="form-label"></label>
+                        <input asp-for="Veterinario.Especialidad" class="form-control" placeholder="Ej. Cirugía, General..." />
+                        <span asp-validation-for="Veterinario.Especialidad" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Veterinario.Telefono" class="form-label"></label>
+                        <input asp-for="Veterinario.Telefono" class="form-control" placeholder="Numero de telefono" />
+                        <span asp-validation-for="Veterinario.Telefono" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Veterinario.Estado" class="form-label"></label>
+                        <select asp-for="Veterinario.Estado" class="form-select">
+                            <option value="Activo">Activo</option>
+                            <option value="Inactivo">Inactivo</option>
+                        </select>
+                        <span asp-validation-for="Veterinario.Estado" class="text-danger small"></span>
+                    </div>
+
+                    <div class="d-flex justify-content-end gap-2">
+                        <button type="reset" class="btn btn-secondary">Limpiar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-header bg-white">
+                <h5 class="card-title mb-0">Lista de Veterinarios</h5>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>#</th>
+                                <th>Nombre Completo</th>
+                                <th>Especialidad</th>
+                                <th>Telefono</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.ListaVeterinarios.Count == 0)
+                            {
+                                <tr>
+                                    <td colspan="5" class="text-center text-muted py-3">
+                                        No hay veterinarios registrados.
+                                    </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                @foreach (var v in Model.ListaVeterinarios)
+                                {
+                                    <tr>
+                                        <td>@v.Id</td>
+                                        <td><strong>@v.NombreCompleto</strong></td>
+                                        <td>@v.Especialidad</td>
+                                        <td>@(string.IsNullOrEmpty(v.Telefono) ? "-" : v.Telefono)</td>
+                                        <td>
+                                            <span class="badge @(v.Estado == "Activo" ? "bg-success" : "bg-danger")">
+                                                @v.Estado
+                                            </span>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

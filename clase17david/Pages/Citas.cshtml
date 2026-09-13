@@ -1,0 +1,153 @@
+@page
+@model clase17david.Pages.CitasModel
+@{
+    ViewData["Title"] = "Citas Medicas";
+}
+
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="card shadow-sm">
+            <div class="card-header bg-white">
+                <h5 class="card-title mb-0">Agendar Cita</h5>
+            </div>
+            <div class="card-body">
+                @if (!string.IsNullOrEmpty(Model.Mensaje))
+                {
+                    <div class="alert alert-success py-2" role="alert">
+                        @Model.Mensaje
+                    </div>
+                }
+
+                <form method="post">
+                    <div class="mb-3">
+                        <label asp-for="Cita.MascotaId" class="form-label"></label>
+                        <select asp-for="Cita.MascotaId" class="form-select">
+                            <option value="">-- Seleccionar Mascota --</option>
+                            @foreach (var m in Model.ListaMascotas)
+                            {
+                                <option value="@m.Id">@m.Nombre (@m.Especie) - Dueño: @(m.Propietario?.NombreCompleto ?? "N/A")</option>
+                            }
+                        </select>
+                        <span asp-validation-for="Cita.MascotaId" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Cita.VeterinarioId" class="form-label"></label>
+                        <select asp-for="Cita.VeterinarioId" class="form-select">
+                            <option value="">-- Seleccionar Veterinario --</option>
+                            @foreach (var v in Model.ListaVeterinarios)
+                            {
+                                <option value="@v.Id">@v.NombreCompleto - @v.Especialidad</option>
+                            }
+                        </select>
+                        <span asp-validation-for="Cita.VeterinarioId" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Cita.FechaHora" class="form-label"></label>
+                        <input asp-for="Cita.FechaHora" type="datetime-local" class="form-control" />
+                        <span asp-validation-for="Cita.FechaHora" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Cita.Motivo" class="form-label"></label>
+                        <input asp-for="Cita.Motivo" class="form-control" placeholder="Motivo de la consulta" />
+                        <span asp-validation-for="Cita.Motivo" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Cita.EstadoCita" class="form-label"></label>
+                        <select asp-for="Cita.EstadoCita" class="form-select">
+                            <option value="Pendiente">Pendiente</option>
+                            <option value="Completada">Completada</option>
+                            <option value="Cancelada">Cancelada</option>
+                        </select>
+                        <span asp-validation-for="Cita.EstadoCita" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Cita.Diagnostico" class="form-label"></label>
+                        <textarea asp-for="Cita.Diagnostico" class="form-control" rows="2" placeholder="Diagnóstico u observaciones"></textarea>
+                        <span asp-validation-for="Cita.Diagnostico" class="text-danger small"></span>
+                    </div>
+
+                    <div class="d-flex justify-content-end gap-2">
+                        <button type="reset" class="btn btn-secondary">Limpiar</button>
+                        <button type="submit" class="btn btn-primary">Guardar Cita</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-header bg-white">
+                <h5 class="card-title mb-0">Citas Programadas</h5>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Fecha / Hora</th>
+                                <th>Mascota y Dueño</th>
+                                <th>Veterinario</th>
+                                <th>Motivo / Diagnostico</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.ListaCitas.Count == 0)
+                            {
+                                <tr>
+                                    <td colspan="5" class="text-center text-muted py-3">
+                                        No hay citas registradas.
+                                    </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                @foreach (var c in Model.ListaCitas)
+                                {
+                                    string badgeClass = c.EstadoCita switch
+                                    {
+                                        "Completada" => "bg-success",
+                                        "Cancelada" => "bg-danger",
+                                        _ => "bg-warning text-dark"
+                                    };
+
+                                    <tr>
+                                        <td>
+                                            @c.FechaHora.ToString("dd/MM/yyyy HH:mm")
+                                        </td>
+                                        <td>
+                                            <strong>@(c.Mascota?.Nombre ?? "N/A")</strong> (@(c.Mascota?.Especie ?? ""))<br />
+                                            <small class="text-muted">Dueño: @(c.Mascota?.Propietario?.NombreCompleto ?? "N/A")</small>
+                                        </td>
+                                        <td>
+                                            @(c.Veterinario != null ? $"{c.Veterinario.NombreCompleto}" : "N/A")<br />
+                                            <small class="text-muted">@(c.Veterinario?.Especialidad ?? "")</small>
+                                        </td>
+                                        <td>
+                                            <div><strong>@c.Motivo</strong></div>
+                                            @if (!string.IsNullOrEmpty(c.Diagnostico))
+                                            {
+                                                <small class="text-muted">@c.Diagnostico</small>
+                                            }
+                                        </td>
+                                        <td>
+                                            <span class="badge @badgeClass">
+                                                @c.EstadoCita
+                                            </span>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
