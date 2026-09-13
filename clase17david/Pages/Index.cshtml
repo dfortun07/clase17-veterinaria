@@ -1,0 +1,82 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Inicio";
+}
+
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="p-4 bg-light border rounded-3">
+            <h2 class="fw-bold">Sistema de Gestion - Veterinaria Arca de Noe</h2>
+            <p class="text-muted mb-0">
+                Modulo de administracion de propietarios, mascotas, veterinarios y agendamiento de citas medicas.
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-3 col-sm-6">
+        <div class="card border-0 shadow-sm text-center py-3">
+            <div class="card-body">
+                <h6 class="text-muted text-uppercase mb-2">Propietarios</h6>
+                <h2 class="fw-bold text-primary mb-0">@Model.TotalPropietarios</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6">
+        <div class="card border-0 shadow-sm text-center py-3">
+            <div class="card-body">
+                <h6 class="text-muted text-uppercase mb-2">Mascotas</h6>
+                <h2 class="fw-bold text-success mb-0">@Model.TotalMascotas</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6">
+        <div class="card border-0 shadow-sm text-center py-3">
+            <div class="card-body">
+                <h6 class="text-muted text-uppercase mb-2">Veterinarios</h6>
+                <h2 class="fw-bold text-info mb-0">@Model.TotalVeterinarios</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6">
+        <div class="card border-0 shadow-sm text-center py-3">
+            <div class="card-body">
+                <h6 class="text-muted text-uppercase mb-2">Citas Pendientes</h6>
+                <h2 class="fw-bold text-warning mb-0">@Model.TotalCitasPendientes</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title fw-bold">Propietarios</h5>
+                <p class="card-text text-muted">Registro y control de datos de contacto de los clientes.</p>
+                <a asp-page="/Propietarios" class="btn btn-outline-primary btn-sm">Ir a Propietarios</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title fw-bold">Mascotas</h5>
+                <p class="card-text text-muted">Ficha clinica y registro de pacientes asociados a cada propietario.</p>
+                <a asp-page="/Mascotas" class="btn btn-outline-success btn-sm">Ir a Mascotas</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title fw-bold">Citas Medicas</h5>
+                <p class="card-text text-muted">Programacion y seguimiento de atenciones veterinarias.</p>
+                <a asp-page="/Citas" class="btn btn-outline-dark btn-sm">Ir a Citas</a>
+            </div>
+        </div>
+    </div>
+</div>
+
